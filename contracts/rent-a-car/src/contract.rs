@@ -1,5 +1,5 @@
 use soroban_sdk::{contract, contractimpl, Address, Env};
-use crate::{interfaces::contract::RentACarContractTrait, methods::token::token::token_transfer, storage::{admin::{has_admin, read_admin, write_admin}, car::{has_car, read_car, remove_car, write_car}, contract_balance::{read_contract_balance, write_contract_balance}, rental::write_rental, structs::{car::Car, rental::Rental}, token::write_token, types::{car_status::CarStatus, error::Error}}};
+use crate::{events, interfaces::contract::RentACarContractTrait, methods::token::token::token_transfer, storage::{admin::{has_admin, read_admin, write_admin}, car::{has_car, read_car, remove_car, write_car}, contract_balance::{read_contract_balance, write_contract_balance}, rental::write_rental, structs::{car::Car, rental::Rental}, token::write_token, types::{car_status::CarStatus, error::Error}}};
 
 #[contract]
 pub struct RentACarContract;
@@ -17,6 +17,9 @@ impl RentACarContractTrait for RentACarContract {
 
         write_admin(env, &admin);
         write_token(env, &token);
+
+        events::contract::contract_initialized(env, admin, token);
+
 
         Ok(())
     }
@@ -45,6 +48,8 @@ impl RentACarContractTrait for RentACarContract {
         };
 
         write_car(env, &owner, &car);
+        events::add_car::car_added(env, owner, price_per_day);
+
         Ok(())
     }
 
@@ -99,6 +104,8 @@ impl RentACarContractTrait for RentACarContract {
         write_rental(env, &renter, &owner, &rental);
 
         token_transfer(&env, &renter, &env.current_contract_address(), &amount);
+        events::rental::rented(env, renter, owner, total_days_to_rent, amount);
+
         Ok(())
     }
 
@@ -133,6 +140,8 @@ impl RentACarContractTrait for RentACarContract {
         write_contract_balance(&env, &contract_balance);
 
         token_transfer(&env, &env.current_contract_address(), &owner, &amount);
+        events::payout_owner::payout_owner(env, owner, amount);
+
         Ok(())
     }
 
@@ -146,6 +155,7 @@ admin.require_auth();
         }
 
         remove_car(env, &owner);
+        events::remove_car::car_removed(env, owner);
         Ok(())
     }
 }
