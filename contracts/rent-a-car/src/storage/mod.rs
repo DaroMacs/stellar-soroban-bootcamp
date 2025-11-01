@@ -4,3 +4,4 @@ pub mod rental;
 pub mod token;
 pub mod structs;
 pub mod types;
+pub mod contract_balance;
