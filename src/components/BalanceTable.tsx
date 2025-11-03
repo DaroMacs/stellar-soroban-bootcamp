@@ -1,4 +1,4 @@
-import { AccountBalance } from "../interface/account";
+import { AccountBalance } from "../interfaces/account";
 
 interface BalanceTableProps {
   balances: AccountBalance[];

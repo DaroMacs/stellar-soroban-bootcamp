@@ -3,7 +3,7 @@ import { useState } from "react";
 import { saveAccountToStorage } from "../utils/local-storage";
 import { stellarService } from "../services/stellar.service";
 import AccountCard from "./AccountCard";
-import { AccountBalance, IAccount } from "../interface/account";
+import { AccountBalance, IAccount } from "../interfaces/account";
 import PaymentModal from "./PaymentModal";
 import useModal from "../hooks/useModal";
 import StellarExpertLink from "./StellarExpertLink";

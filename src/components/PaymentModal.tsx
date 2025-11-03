@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IAccount } from "../interface/account";
+import { IAccount } from "../interfaces/account";
 import { stellarService } from "../services/stellar.service";
 import Modal from "./Modal";
 

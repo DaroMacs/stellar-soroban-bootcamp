@@ -1,4 +1,4 @@
-import { IAccount } from "../interface/account";
+import { IAccount } from "../interfaces/account";
 
 const STORAGE_PREFIX = "account_";
 const CURRENT_ACCOUNT_KEY = "current_account";

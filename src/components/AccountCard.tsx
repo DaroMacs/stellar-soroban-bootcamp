@@ -1,4 +1,4 @@
-import { IAccount } from "../interface/account";
+import { IAccount } from "../interfaces/account";
 import BalanceTable from "./BalanceTable";
 
 interface AccountCardProps {
